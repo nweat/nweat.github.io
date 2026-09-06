@@ -58,6 +58,10 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.local
+
+# Private freelancing notes (not for public site)
+UPWORK_PROPOSALS.md
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache

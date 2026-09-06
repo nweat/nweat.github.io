@@ -6,15 +6,15 @@
 
 
 [template.environment]
-  BASE_URL=""
+  BASE_URL="https://nweat.github.io"
   GOOGLE_ANALYTICS_ID=""
   NOTION_TABLE_ID="ceef6f1a895a46b2a0e4a87b41405547"
   NOTION_ABOUT_PAGE_ID="ad2346af0894443d8906cf78de4f310f"
   GHUB_USERNAME="nweat"
-  DEV_LOGO="set your name logo (required)"
-  DEV_NAME="your full name (required)"
-  DEV_DESCRIPTION="tell us a little bit about you (required)"
-  DEV_ROLE="what's your role as a developer? (eg Backend Developer) (required)"
-  DEV_GITHUB_LINK=""
+  DEV_LOGO="nweat"
+  DEV_NAME="Nicole Weatherburne"
+  DEV_DESCRIPTION="AI Product Engineer building RAG chatbots, LLM pipelines, and full-stack AI SaaS features that stay grounded, reliable, and cost-aware."
+  DEV_ROLE="AI Product Engineer"
+  DEV_GITHUB_LINK="https://github.com/nweat"
   DEV_TWITTER_LINK=""
   DEV_LINKEDIN_LINK=""

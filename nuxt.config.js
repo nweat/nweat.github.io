@@ -2,6 +2,10 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
+  server: {
+    port: 3001,
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: process.env.GHUB_USERNAME,
@@ -66,25 +70,43 @@ export default {
   sitemap: {
     hostname: process.env.BASE_URL,
     routes: async () => {
-      const notion = require('vue-notion')
-      const pageTable = await notion.getPageTable(process.env.NOTION_TABLE_ID)
-      // console.log(pageTable)
-      return pageTable.filter((item) => !!item.public).map((item) => `/posts/${item.slug}`)
-    }
+      try {
+        const notion = require('vue-notion')
+        const pageTable = await notion.getPageTable(process.env.NOTION_TABLE_ID)
+        if (Array.isArray(pageTable) && pageTable.length) {
+          return pageTable
+            .filter((item) => !!item.public)
+            .map((item) => `/posts/${item.slug}`)
+        }
+      } catch (err) {
+        // fall through to static
+      }
+      const { STATIC_BLOG_POSTS } = require('./plugins/utils/staticBlogPosts')
+      return STATIC_BLOG_POSTS.map((p) => `/posts/${p.slug}`)
+    },
+  },
+
+  generate: {
+    routes() {
+      const { STATIC_BLOG_POSTS } = require('./plugins/utils/staticBlogPosts')
+      return STATIC_BLOG_POSTS.map((p) => `/posts/${p.slug}`)
+    },
   },
 
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
-    githubUsername: process.env.GHUB_USERNAME,
+    githubUsername: process.env.GHUB_USERNAME || 'nweat',
     notionTableId: process.env.NOTION_TABLE_ID,
     notionAboutPageId: process.env.NOTION_ABOUT_PAGE_ID,
-    devName: process.env.DEV_NAME,
-    devDescription: process.env.DEV_DESCRIPTION,
-    devRole: process.env.DEV_ROLE,
-    devGithubLink: process.env.DEV_GITHUB_LINK,
+    devName: process.env.DEV_NAME || 'Nicole Weatherburne',
+    devDescription:
+      process.env.DEV_DESCRIPTION ||
+      'AI Product Engineer building RAG chatbots, LLM pipelines, and full-stack AI SaaS features that stay grounded, reliable, and cost-aware.',
+    devRole: process.env.DEV_ROLE || 'AI Product Engineer',
+    devGithubLink: process.env.DEV_GITHUB_LINK || 'https://github.com/nweat',
     devTwitterLink: process.env.DEV_TWITTER_LINK,
     devLinkedinLink: process.env.DEV_LINKEDIN_LINK,
-    devLogo: process.env.DEV_LOGO,
+    devLogo: process.env.DEV_LOGO || 'nweat',
   },
 
 }

@@ -10,23 +10,14 @@
     <div class="wrapper-small my-5">
       <div
         v-for="post of posts"
-        :key="post.slug"
+        :key="post.slug || post.id"
         class="project-card md:flex mt-10"
       >
-        <div class="img max-w-lg md:max-w-sm mx-auto m-2">
-          <nuxt-link :to="`/posts/${post.slug}`">
-            <img
-              :alt="post.title"
-              :src="`${post.thumbnail[0].url}`"
-              class="rounded-xl h-44 w-96 object-cover object-center"
-            />
-          </nuxt-link>
-        </div>
-        <div class="flex flex-col justify-between max-w-lg mx-auto">
-          <div class="txt md:px-5 lg:px-0">
+        <div class="flex flex-col justify-between max-w-3xl mx-auto w-full">
+          <div class="txt">
             <nuxt-link :to="`/posts/${post.slug}`">
               <h2
-                class="text-xl font-semibold text-gray-800 dark:text-gray-100"
+                class="text-xl font-semibold text-gray-800 dark:text-gray-100 hover:text-primary"
               >
                 {{ post.title }}
               </h2>
@@ -34,9 +25,8 @@
             <p class="font-semibold text-gray-600 dark:text-gray-300 text-sm">
               {{ formatDate(post.created_at) }}
             </p>
-            <div class="flex flex-col justify-between max-w-lg mx-auto"></div>
             <span
-              v-for="tag of post.tags"
+              v-for="tag of post.tags || []"
               :key="tag"
               class="font-semibold text-gray-600 bg-opacity-25 dark:bg-opacity-40 dark:text-gray-300 text-sm rounded bg-gray-200 dark:bg-primary mr-1 px-1"
             >
@@ -74,6 +64,7 @@ export default {
   },
   methods: {
     formatDate(date) {
+      if (!date) return ''
       const options = { year: 'numeric', month: 'long', day: 'numeric' }
       return new Date(date).toLocaleDateString('en', options)
     },
